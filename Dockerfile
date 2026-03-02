@@ -49,8 +49,13 @@ COPY init-n10s.sh /startup/init-n10s.sh
 # Strip Windows CRLF if present, then make executable
 RUN sed -i 's/\r$//' /startup/init-n10s.sh && chmod +x /startup/init-n10s.sh
 
+# Railway needs PORT to know where to route traffic
+ENV PORT=7474
+
 EXPOSE 7474 7687
 
-# The official entrypoint handles everything; we wrap it to run
-# our one-time n10s bootstrap after the DB is ready.
+# Override the base image's ENTRYPOINT so our init script runs
+# directly (not as an arg to docker-entrypoint.sh).
+# init-n10s.sh calls /startup/docker-entrypoint.sh neo4j internally.
+ENTRYPOINT ["tini", "-g", "--"]
 CMD ["/startup/init-n10s.sh"]
