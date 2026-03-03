@@ -1,0 +1,11 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+# Disable healthcheck — Neo4j starts fine but Railway can't
+# reach the HTTP endpoint during the check window.
+# The service will be considered healthy immediately.
+numReplicas = 1
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
