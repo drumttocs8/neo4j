@@ -51,7 +51,7 @@ cypher-shell -u "$NEO4J_USER" -p "$NEO4J_PASS" \
 cypher-shell -u "$NEO4J_USER" -p "$NEO4J_PASS" <<'CYPHER'
 CALL n10s.graphconfig.init({
   handleVocabUris:      "SHORTEN",
-  handleMultival:        "ARRAY",
+  handleMultival:        "OVERWRITE",
   keepLangTag:           true,
   keepCustomDataTypes:   true,
   typesToLabels:         true
